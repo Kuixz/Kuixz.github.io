@@ -1,3 +1,8 @@
+:root {
+    --bucket-width: 144;
+    --bucket-height: 120;
+}
+
 body {
     background-color: rgb(10, 25, 41);
     color: white;
@@ -5,57 +10,80 @@ body {
 
 div#frame {
     border: 2px solid white;
-    height: 450px;
+    height: 600px; /* 450px; */
     width: 800px;  
     /* position: relative; */
     display:flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 
-div#barrel {
+/* div#barrel {
     width: 740px;
     height: 300px;
     border: 3px solid red;
     position: relative;
+} */
+div.barrel {
+    border: 3px solid red;
+    position: relative;
+    /* align-items: baseline; */
 }
 
-div#fade {
+div.fade {
     pointer-events: none;
     position: absolute;
-    top:0px;
-    left:0px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
     /* background-color: rgb(10, 25, 41);  */
-    background: linear-gradient(#0a1929,#0a192900,#0a1929);
-    opacity: 0.3;
-    width: 740px;
-    height: 300px;
+    background: linear-gradient(#0a19294D,#0a192900,#0a19294D);
+    /* opacity: 0.3; */
 }
-div#inner-fade {
+div.inner-fade {
     pointer-events: none;
     position: absolute;
-    top:0px;
-    left:0px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
     /* background-color: rgb(10, 25, 41);  */
-    background: linear-gradient(#0a192900 20%,#0a1929 40%,#0a1929 60%, #0a192900 80%);
-    opacity: 0.6;
-    width: 740px;
-    height: 300px;
+    background: linear-gradient(#0a192900 20%,#0a192999 40%,#0a192999 60%, #0a192900 80%);
+    /* opacity: 0.6; */
 }
 
-div.hover-container {
+div.hover-shelf {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* left:  */
     /* border: 2px solid white; */
+}
+
+div.bucket {
+    /* position: absolute; */
+    height: var(--bucket-height);
+    width: var(--bucket-width);
+    /* border: 2px solid white; */
+}
+img.wall-back {
     position: absolute;
-    /* display: flex; */
-    width: 640px;
-    height: 104px;
-    /* pointer-events: none; */
-    pointer-events: none;
+    width: var(--bucket-width);
+    height: var(--bucket-height);
+}
+img.wall-front {
+    position: absolute;
+    bottom: 0px;
+    width: var(--bucket-width);
 }
 
 .hoverable {
+    /* position: absolute; */
     pointer-events: initial;
+    /* aspect-ratio: initial; */
     cursor: pointer;
 }
 .hoverable.hover {
