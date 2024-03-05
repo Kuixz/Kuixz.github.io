@@ -17,7 +17,10 @@ root.style.setProperty("--bucket-height", bucketHeight)
 const links = {
     "mikoban" : "https://kuixz.itch.io/mikoban",
     "snowsweeper" : "https://github.com/Kuixz/snowsweeper",
-    "cellulart" : "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam"
+    "cellulart" : "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
+    "1938" : "https://scratch.mit.edu/projects/976714957/",
+    "ppuc" : "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
+    "DH5a" : ""
 }
 // let data = [
 //     [],[],[],[],[]

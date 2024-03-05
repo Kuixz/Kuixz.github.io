@@ -56,15 +56,15 @@ div.inner-fade {
 
 div.hover-shelf {
     position: absolute;
+    pointer-events: none;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    /* left:  */
     /* border: 2px solid white; */
 }
 
 div.bucket {
-    /* position: absolute; */
+    pointer-events: initial;
     height: var(--bucket-height);
     width: var(--bucket-width);
     /* border: 2px solid white; */

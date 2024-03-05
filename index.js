@@ -4,7 +4,7 @@ var frame = document.getElementById("frame")
 
 var item1 = new HoverIcon("snowsweeper", 10, 10, 0.7, -3)
 var item2 = new HoverIcon("mikoban", 60, 0, 0.7, 10)
-var layer0 = new Shelf(740, [[item1],,[item2],,])
+// var layer0 = new Shelf(740, [[item1],,[item2],,])
 // layer0 = [[item1],[item2]]
 // var layer1 = new Shelf(740, [1,2,3])
 // var layer2 = new Shelf(740, [1,2,3,4])
@@ -16,7 +16,7 @@ var layer0 = new Shelf(740, [[item1],,[item2],,])
 // var layer3 = new HoverShelf([["mikoban", -320], ["mikoban", 0], ["mikoban", 320]], 3)
 // var layer4 = new HoverShelf([["flag", -320], ["flag", 0], ["flag", 320]], 4)
 
-var layers = [layer0,[,,,],[,,,,],[,,,],[,,,,]]
+var layers = [[[item1],,[item2],,],[,[["1938",18,5,0.9,-31]],,],[,,,,],[,,,],[,,,[["cellulart",10,15,0.9,-45]]]]
 // layers = [layer0,[,]]
 // var layers = [layer0,[[["snowsweeper", 10, 10, 0.7, -3]],,[["snowsweeper", 10, 10, 0.7, -3]],,],]
 // var layers = [layer0, layer1, layer2]
