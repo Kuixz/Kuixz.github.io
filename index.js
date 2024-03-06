@@ -1,6 +1,7 @@
 
 var frame = document.getElementById("frame")
 
+var t = setAttributes(document.createElement("p"),{ parent:frame })
 
 var item1 = new HoverIcon("snowsweeper", 10, 10, 0.7, -3)
 var item2 = new HoverIcon("mikoban", 60, 0, 0.7, 10)
@@ -16,7 +17,7 @@ var item2 = new HoverIcon("mikoban", 60, 0, 0.7, 10)
 // var layer3 = new HoverShelf([["mikoban", -320], ["mikoban", 0], ["mikoban", 320]], 3)
 // var layer4 = new HoverShelf([["flag", -320], ["flag", 0], ["flag", 320]], 4)
 
-var layers = [[[item1],,[item2],,],[,[["1938",18,5,0.9,-31]],,],[,,,,],[,,,],[,,,[["cellulart",10,15,0.9,-45]]]]
+var layers = [[[item1],,[item2],,],[,[["cantor",44,,0.8],["1938",18,,0.9,-31]],,],[,,,[["ppuc",3,6,1.1,-10]],],[,,,],[,,,[["cellulart",-2,8,0.9,-30]]]]
 // layers = [layer0,[,]]
 // var layers = [layer0,[[["snowsweeper", 10, 10, 0.7, -3]],,[["snowsweeper", 10, 10, 0.7, -3]],,],]
 // var layers = [layer0, layer1, layer2]
@@ -38,3 +39,9 @@ document.addEventListener("keydown", (e) => {
         barrel.scroll("up")
     }
 });
+
+// t.textContent = "f"
+// var f = new Flag()
+// t.textContent = f.up
+// f.raise()
+// t.textContent = f.up

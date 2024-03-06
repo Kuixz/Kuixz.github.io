@@ -8,6 +8,10 @@ body {
     color: white;
 }
 
+img {
+    user-select: none;
+}
+
 div#frame {
     border: 2px solid white;
     height: 600px; /* 450px; */
@@ -64,6 +68,7 @@ div.hover-shelf {
 }
 
 div.bucket {
+    /* position: absolute; */
     pointer-events: initial;
     height: var(--bucket-height);
     width: var(--bucket-width);
@@ -73,6 +78,7 @@ img.wall-back {
     position: absolute;
     width: var(--bucket-width);
     height: var(--bucket-height);
+    /* pointer-events: */
 }
 img.wall-front {
     position: absolute;
