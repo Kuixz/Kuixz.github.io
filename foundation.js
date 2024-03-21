@@ -21,8 +21,8 @@ const mod = (n,m) => ((n % m) + m) % m
 // }
 
 const root = document.querySelector(":root");
-var bucketWidth = 144
-var bucketHeight = 120
+var bucketWidth = 165  // 216 144
+var bucketHeight = 137  // 180 120
 root.style.setProperty("--bucket-width", bucketWidth)
 root.style.setProperty("--bucket-height", bucketHeight)
 
@@ -35,54 +35,79 @@ const links = {
     "cantor" : "https://www.desmos.com/calculator/singorvcyg",
     "DH5a" : ""
 }
-// let data = [
-//     [],[],[],[],[]
-// ]
 
-function createHoverElement(obj) {
-    var img = new Image()
-    img.src = "icons/" + obj + ".png"
-    img.classList.add("hoverable")
-    img.classList.add("tray")
-    img.onclick = function() {
-        // t.textContent = obj
-        window.open(links[obj])
-    }
-    img.onmouseenter = function() {
-        // t.textContent = "hover"
-        img.classList.add("hover")
-    }
-    img.onmouseleave = function() {
-        // t.textContent = "unhover"
-        img.classList.remove("hover")
-    }
-    frame.appendChild(img)
+const Selector = {
+    spacer : setAttributes(document.createElement("div"),{ style:"visibility: hidden" }),
+    selected : undefined,
 
-    // t.textContent = "c"
-    return img
+    select(icon) {
+        // if (this.selected || icon.element == this.selected) {
+        //     this.selected.element.classList.remove("float")
+        // }
+        if (this.selected) {
+            if (this.selected != icon) { this.deselect() } else { this.deselect(); return }
+        }
+        root.style.setProperty("--selected-icon-resize", icon.size * 1.5)  // Goofy workaround, why!?
+        icon.element.classList.add("float")
+        this.flash(icon.element)
+
+        icon.element.insertAdjacentElement("beforebegin", this.spacer)
+        hoverCenter.appendChild(icon.element)
+        this.selected = icon
+    },
+    deselect() {
+        const icon = this.selected
+        icon.element.classList.remove("float")
+        this.flash(icon.element)
+
+        // icon.return()
+        this.spacer.insertAdjacentElement("beforebegin", icon.element)
+        this.selected = undefined
+    },
+    flash(element) {
+        element.animate(
+            [{
+                filter: "contrast(0) brightness(2)"
+            },{
+                filter: "contrast(1) brightness(1)"
+            }],{
+                duration: 300
+        })
+    }
 }
+
+const d = 0 
 
 class HoverIcon {
     element
 
-    constructor(id, transformxpercent=0, transformypercent=0, size=1, rotdeg=0) {
-        var element = setAttributes(document.createElement("img"), { src:`icons/${id}.png`, class:"hoverable tray", 
-            style:`transform: scale(${size}) translate(${transformxpercent}%,${transformypercent}%) rotate(${rotdeg}deg);` })
-        element.onclick = function() {
-            // t.textContent = obj
-            window.open(links[id])
+    // parent
+    size
+
+    constructor(parent, id, transformxpercent=0, transformypercent=0, size=1, rotdeg=0) {
+        var element = setAttributes(document.createElement("img"), { src:`icons/${id}.png`, class:"hoverable icon",  
+            style:`width: ${100*size}%; transform: translate(${transformxpercent}%,${transformypercent}%) rotate(${rotdeg}deg);` })/* scale(${size}) */
+        // element.setAttribute
+        element.onclick = (e) => {
+            // window.open(links[id])
+            // t.textContent = size
+            // root.style.setProperty("--selected-icon-resize", this.size)
+            Selector.select(this)
         }
         element.onmouseenter = function() {
-            // t.textContent = "hover"
             element.classList.add("hover")
         }
         element.onmouseleave = function() {
-            // t.textContent = "unhover"
             element.classList.remove("hover")
         }
 
         this.element = element
+        // this.parent = parent
+        this.size = size
     }
+    // return() {
+    //     this.parent.enbucket(this)
+    // }
 }
 
 class Bucket { 
@@ -98,7 +123,7 @@ class Bucket {
                 // (item instanceof Array) ? new HoverIcon(...item) :
                 // (item instanceof HoverIcon) ? item : 
             // if (item === undefined) {
-            var pushable = (item instanceof Array) ? new HoverIcon(...item) : item
+            var icon = /* (item instanceof Array) ? */ new HoverIcon(this, ...item) //: item
             // } else
             // if (item instanceof Array) {
             //     var newIcon = new HoverIcon(...item)
@@ -107,29 +132,37 @@ class Bucket {
             // else if (item instanceof HoverIcon) {
             //     this.element.appendChild(item.element)
             // }
-            this.element.appendChild(pushable.element)
+            // this.enbucket(icon)
+            this.element.appendChild(icon.element)
         }
         var wallFront = new Image(); wallFront.src = "assets/front.png"; wallFront.classList.add("wall-front"); this.element.appendChild(wallFront)
     }
+    // enbucket(icon) {
+    //     // this.element.appendChild(icon.element)
+    //     // this.element.insertBefore(icon.element, this.element.firstChild)
+    // }
 }
 
 class Shelf {  // TODO switch to using flex and justify center; support 1-bucket shelves
     element = undefined
     // index = 0
     // axis
-    child_count
+    length
     children = []
     // sprites = []
     // spacer
 
     constructor(width, buckets) {
-        var coreWidth = width - bucketWidth
+        const coreWidth = width - bucketWidth
         this.element = setAttributes(document.createElement("div"), { class:"hover-shelf" })
-        this.child_count = buckets.length
+        this.length = buckets.length
         this.axis = coreWidth / 2
-        // this.spacer = coreWidth / (this.child_count - 1)
+        // this.spacer = coreWidth / (this.length - 1)
 
-        if (this.child_count == 1) { this.element.style.justifyContent = "center" }
+        // if (this.length == 1) { 
+        // if (this.length < 3) { 
+        //     this.element.style.justifyContent = "space-evenly" 
+        // }
         for (const bucket of buckets) {
             const pushable = (bucket === undefined || bucket instanceof Array) ? new Bucket(bucket) : bucket
             // var bucket = buckets[i]
@@ -162,10 +195,11 @@ class Shelf {  // TODO switch to using flex and justify center; support 1-bucket
         //     // + (0.1 * (i * this.spacer - axis) * (Math.cos(theta) - 1)) + "px"
         // }
         var offset = (4 * (Math.cos(theta) - 1))
-        this.element.style.width = 100 + (2 * offset) + "%"
+        // this.element.style.width = 100 + (2 * offset) + "%"
         // this.element.style.left = - offset + "%"
         // t.textContent = offset
-        this.element.style.transform = this.element.style.transform + ` translateX(${-offset}%)`
+        // this.element.style.transform = this.element.style.transform + ` translateX(${-offset}%)`
+        this.element.style.transform = this.element.style.transform + `scale(${100 + (2*offset)}%)`
     }
 }
 
@@ -180,7 +214,9 @@ class Barrel {
 
     constructor(width, height, shelves) {
         // var coreWidth = width - bucketWidth
-        var coreHeight = height - bucketHeight
+        const coreHeight = height - bucketHeight
+        const maxBuckets = Math.max(...shelves.filter((x) => x).map((arr) => arr.length))
+        // t.textContent = maxBuckets
         this.element = setAttributes(document.createElement("div"), { "style":`width:${width}; height:${height}`, "class":"barrel" })
         this.childCount = shelves.length
         this.axis = height / 2 - bucketHeight / 2
@@ -193,22 +229,8 @@ class Barrel {
 
         for (const shelf of shelves) {
             const pushable = (shelf === undefined || shelf instanceof Array) ? new Shelf(width, shelf) : shelf
-            // if (shelf === undefined || shelf.constructor instanceof Array)
-            // if (shelf === undefined || shelf instanceof Array) {
-            //     shelf
-            // }
-            // if (shelf === undefined) {
-            //     var newShelf = new Shelf(0, [])
-            //     this.children.push(newShelf)
-            //     this.element.appendChild(newShelf.element)
-            // } else if (shelf instanceof Array) {
-            //     var newShelf = new Shelf(width, shelf)
-            //     this.children.push(newShelf)
-            //     this.element.appendChild(newShelf.element)
-            // }
-            // else if (shelf instanceof Shelf) {
-            //     this.children.push(shelf)
-            //     this.element.appendChild(shelf.element)
+            // if (shelf && shelf.length < maxBuckets) {
+            //     pushable.element.style.justifyContent = "space-evenly"
             // }
             this.children.push(pushable)
             this.element.appendChild(pushable.element)

@@ -1,6 +1,7 @@
 :root {
     --bucket-width: 144;
     --bucket-height: 120;
+    --selected-icon-resize: 1;
 }
 
 body {
@@ -14,13 +15,13 @@ img {
 
 div#frame {
     border: 2px solid white;
-    height: 600px; /* 450px; */
-    width: 800px;  
-    /* position: relative; */
-    display:flex;
+    height: 600px; /* 775px; /* 450px; */
+    width: 1200px; 
+    position: relative; 
+    /* display:flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: left;
+    align-items: center; */
+    /* justify-content: left; */
 }
 
 /* div#barrel {
@@ -32,7 +33,10 @@ div#frame {
 div.barrel {
     border: 3px solid red;
     position: relative;
+    margin-top: 5%;
+    margin-left: 10%;
     /* align-items: baseline; */
+
 }
 
 div.fade {
@@ -57,18 +61,18 @@ div.inner-fade {
     background: linear-gradient(#0a192900 20%,#0a192999 40%,#0a192999 60%, #0a192900 80%);
     /* opacity: 0.6; */
 }
-
 div.hover-shelf {
     position: absolute;
     pointer-events: none;
     display: flex;
     justify-content: space-between;
+    /* justify-content: space-evenly; */
     width: 100%;
     /* border: 2px solid white; */
 }
-
 div.bucket {
     /* position: absolute; */
+    position: relative; 
     pointer-events: initial;
     height: var(--bucket-height);
     width: var(--bucket-width);
@@ -99,8 +103,61 @@ img.wall-front {
             drop-shadow(0 -5px 0 white)
 }
 
-img.tray {
+/* img */ .icon {
     position: absolute;
-    width:100px
+    /* bottom: 0px; */
+    /* width: 100px */
     /* rotate: ; */
+}
+
+/* img */ .float {
+    /* left: 50%; */
+    position: initial;
+    animation: float 4s ease-in-out infinite
+}
+@keyframes float {
+    0% {
+        transform: translateY(5%) scale(var(--selected-icon-resize));
+    }
+    50% {
+        transform: translateY(-5%) scale(var(--selected-icon-resize));
+    }
+    100% {
+        transform: translateY(5%) scale(var(--selected-icon-resize));
+    }
+    /* 75% {
+        transform: translateY(5%);
+    } */
+}
+
+
+div.platform {
+    height: 100%;
+    aspect-ratio: 5/12;
+    position: absolute;
+    top: 0px;
+    z-index: 10;
+
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* position:relative */
+}
+img.platsprite {
+    /* height: 100%; */
+    width: 100%;
+    /* position: absolute; */
+    /* position: absolute; 
+    top: 0px;
+    height: 100%;
+    z-index: 10;
+    /* transform-origin: center; */
+} 
+div.hover-center {
+    border: 5px solid yellow;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
