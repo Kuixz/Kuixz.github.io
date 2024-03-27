@@ -66,19 +66,21 @@ const Selector = {
     // spacer : setAttributes(document.createElement("div"),{ style:"visibility: hidden" }),
     selected : undefined,
 
-    select(icon) {
-        // if (this.selected || icon.element == this.selected) { 
-        //     this.selected.element.classList.remove("float")
-        // }
-        if (this.selected) {
-            if (this.selected != icon) { 
-                this.deselect() 
-            } else { 
-                this.deselect()
-                this.retract()
-                return 
-            }
+    onclick(icon) {
+        if (!this.selected) {
+            this.select(icon)
+            this.extend()
+            return
         }
+        if (icon != this.selected) {
+            this.deselect()
+            this.select(icon)
+            return
+        }
+        this.deselect()
+        this.retract()
+    },
+    select(icon) {
         // root.style.setProperty("--selected-icon-resize", icon.size * 1.5)  // Goofy workaround, why!?
         var scaleOverride = Number(icon.element.style.width.slice(0,-1)) * 1.7
         // console.log(Number(icon.element.style.width.slice(0,-1)) * 1.5)
@@ -90,8 +92,17 @@ const Selector = {
         hoverCenter.appendChild(icon.element)
 
         this.selected = icon
-        this.rolldown()
+        // this.extend()
         this.loadContent(icon.id)
+    },
+    deselect() {
+        const icon = this.selected
+        icon.element.classList.remove("float")
+        this.flash(icon.element)
+
+        // icon.return()
+        this.spacer.insertAdjacentElement("beforebegin", icon.element)
+        this.selected = undefined
     },
     async loadContent(id) {
         await this.unravel.load(id)
@@ -104,16 +115,8 @@ const Selector = {
             h1.appendChild(icon)
         }
     },
-    deselect() {
-        const icon = this.selected
-        icon.element.classList.remove("float")
-        this.flash(icon.element)
-
-        // icon.return()
-        this.spacer.insertAdjacentElement("beforebegin", icon.element)
-        this.selected = undefined
-    },
-    rolldown() {
+    extend() {
+        // console.log("extend")
         // this.unravel.classList.add("rolldown")
         // this.unravel.classList.remove("rollup")
         // this.unravel.style.transform = "translateY(100%)"
@@ -129,6 +132,7 @@ const Selector = {
         )
     },
     retract() {
+        // console.log("retract")
         // this.unravel.classList.add("rollup")
         // this.unravel.classList.remove("rolldown")
         // this.unravel.style.transform = "translateY(0%)"
@@ -172,7 +176,7 @@ class HoverIcon {
             // window.open(links[id])
             // t.textContent = size
             // root.style.setProperty("--selected-icon-resize", this.size)
-            Selector.select(this)
+            Selector.onclick(this)
         }
         element.onmouseenter = function() {
             element.classList.add("hover")
