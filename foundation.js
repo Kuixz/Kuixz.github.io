@@ -1,12 +1,28 @@
-const setAttributes = (node, attrs) => { 
+
+Element.prototype.preset = function(attrs, parent = null) {
     for (const [attr, value] of Object.entries(attrs)) { 
-        switch (attr) {
-            case "parent": value.appendChild(node);  break;
-            default: node.setAttribute(attr, value); break;
-        }
+        this.setAttribute(attr, value)
     }; 
-    return node 
+    if (parent) { parent.appendChild(this) }
+    return this 
 }
+
+;(() => {
+    Element.prototype.load = async function (kw) {
+        const url = `/subpages/${kw}/page.html`
+        const response = await fetch(url, {
+            cache: "default"
+        })
+        if(!response.ok) { 
+            this.innerHTML = "<p>Under construction... check back soon!</p>"
+            return
+        }
+        const html = await response.text()
+        // console.log(await response.text())
+        this.innerHTML = html
+    }
+})();
+
 const mod = (n,m) => ((n % m) + m) % m
 // class Flag {
 //     state = false
@@ -26,34 +42,67 @@ var bucketHeight = 137  // 180 120
 root.style.setProperty("--bucket-width", bucketWidth)
 root.style.setProperty("--bucket-height", bucketHeight)
 
-const links = {
-    "mikoban" : "https://kuixz.itch.io/mikoban",
+// class Project {
+//     link
+//     tools
+//     constructor(link, tools) {
+//         this.link = link
+//         this.tools = tools
+//     }
+// }
+const tools = {
+    "mikoban" : ["puzzlescript"], // "https://kuixz.itch.io/mikoban"
     "snowsweeper" : "https://github.com/Kuixz/snowsweeper",
-    "cellulart" : "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
+    "cellulart" : ["html","css","js"], // "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
     "1938" : "https://scratch.mit.edu/projects/976714957/",
-    "ppuc" : "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
+    "ppuc" : ["sheets"], // "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
     "cantor" : "https://www.desmos.com/calculator/singorvcyg",
     "DH5a" : ""
 }
 
 const Selector = {
-    spacer : setAttributes(document.createElement("div"),{ style:"visibility: hidden" }),
+    spacer : document.createElement("div").preset({ style:"visibility: hidden" }),
+    unravel: document.getElementById("unravel"),
+    // spacer : setAttributes(document.createElement("div"),{ style:"visibility: hidden" }),
     selected : undefined,
 
     select(icon) {
-        // if (this.selected || icon.element == this.selected) {
+        // if (this.selected || icon.element == this.selected) { 
         //     this.selected.element.classList.remove("float")
         // }
         if (this.selected) {
-            if (this.selected != icon) { this.deselect() } else { this.deselect(); return }
+            if (this.selected != icon) { 
+                this.deselect() 
+            } else { 
+                this.deselect()
+                this.retract()
+                return 
+            }
         }
-        root.style.setProperty("--selected-icon-resize", icon.size * 1.5)  // Goofy workaround, why!?
+        // root.style.setProperty("--selected-icon-resize", icon.size * 1.5)  // Goofy workaround, why!?
+        var scaleOverride = Number(icon.element.style.width.slice(0,-1)) * 1.7
+        // console.log(Number(icon.element.style.width.slice(0,-1)) * 1.5)
+        root.style.setProperty("--selected-icon-resize", scaleOverride + "%")  // Goofy workaround, why!?
         icon.element.classList.add("float")
         this.flash(icon.element)
 
         icon.element.insertAdjacentElement("beforebegin", this.spacer)
         hoverCenter.appendChild(icon.element)
+
         this.selected = icon
+        this.rolldown()
+        this.loadContent(icon.id)
+    },
+    async loadContent(id) {
+        await this.unravel.load(id)
+        const h1 = this.unravel.querySelector("h1")
+        for (const image of this.unravel.querySelectorAll("img")) {
+            this.flash(image, 1.5)
+        }
+        for (const tool of tools[id]) {
+            const icon = document.createElement('img').preset({ class:"tool", src:`icons/tools/${tool}.png` })
+            h1.appendChild(icon)
+        }
     },
     deselect() {
         const icon = this.selected
@@ -64,15 +113,45 @@ const Selector = {
         this.spacer.insertAdjacentElement("beforebegin", icon.element)
         this.selected = undefined
     },
-    flash(element) {
+    rolldown() {
+        // this.unravel.classList.add("rolldown")
+        // this.unravel.classList.remove("rollup")
+        // this.unravel.style.transform = "translateY(100%)"
+        // this.flash(this.unravel)
+        this.unravel.animate(
+            [{
+                transform: "translateY(0%)"
+            }],{
+                duration: 1000,
+                easing: "ease-out",
+                fill: "forwards"
+            }
+        )
+    },
+    retract() {
+        // this.unravel.classList.add("rollup")
+        // this.unravel.classList.remove("rolldown")
+        // this.unravel.style.transform = "translateY(0%)"
+        this.unravel.animate(
+            [{
+                transform: "translateY(-100%)"
+            }],{
+                duration: 300,
+                easing: "ease-out",
+                fill: "forwards"
+            }
+        )
+    },
+    flash(element, brightness=2) {
         element.animate(
             [{
-                filter: "contrast(0) brightness(2)"
+                filter: `contrast(0) brightness(${brightness})`
             },{
                 filter: "contrast(1) brightness(1)"
             }],{
                 duration: 300
-        })
+            }
+        )
     }
 }
 
@@ -82,10 +161,11 @@ class HoverIcon {
     element
 
     // parent
+    id
     size
 
     constructor(parent, id, transformxpercent=0, transformypercent=0, size=1, rotdeg=0) {
-        var element = setAttributes(document.createElement("img"), { src:`icons/${id}.png`, class:"hoverable icon",  
+        var element = document.createElement("img").preset({ src:`icons/projects/${id}.png`, class:"hoverable icon",  
             style:`width: ${100*size}%; transform: translate(${transformxpercent}%,${transformypercent}%) rotate(${rotdeg}deg);` })/* scale(${size}) */
         // element.setAttribute
         element.onclick = (e) => {
@@ -103,6 +183,7 @@ class HoverIcon {
 
         this.element = element
         // this.parent = parent
+        this.id = id
         this.size = size
     }
     // return() {
@@ -114,7 +195,7 @@ class Bucket {
     element
     
     constructor(items=[]) {
-        this.element = setAttributes(document.createElement("div"), { class:"bucket" })
+        this.element = document.createElement("div").preset({ class:"bucket" })
         var wallBack = new Image(); wallBack.src = "assets/back.png"; wallBack.classList.add("wall-back"); this.element.appendChild(wallBack)
         for (const item of items) {
             // var pushable; switch (item.constructor) {
@@ -154,7 +235,7 @@ class Shelf {  // TODO switch to using flex and justify center; support 1-bucket
 
     constructor(width, buckets) {
         const coreWidth = width - bucketWidth
-        this.element = setAttributes(document.createElement("div"), { class:"hover-shelf" })
+        this.element = document.createElement("div").preset({ class:"hover-shelf" })
         this.length = buckets.length
         this.axis = coreWidth / 2
         // this.spacer = coreWidth / (this.length - 1)
@@ -215,17 +296,17 @@ class Barrel {
     constructor(width, height, shelves) {
         // var coreWidth = width - bucketWidth
         const coreHeight = height - bucketHeight
-        const maxBuckets = Math.max(...shelves.filter((x) => x).map((arr) => arr.length))
+        // const maxBuckets = Math.max(...shelves.filter((x) => x).map((arr) => arr.length))
         // t.textContent = maxBuckets
-        this.element = setAttributes(document.createElement("div"), { "style":`width:${width}; height:${height}`, "class":"barrel" })
+        this.element = document.createElement("div").preset({ "style":`width:${width}; height:${height}`, "class":"barrel" })
         this.childCount = shelves.length
         this.axis = height / 2 - bucketHeight / 2
         // this.children = shelves
         this.diameter = coreHeight / 2
         this.segment = (2 * Math.PI) / (2 * this.childCount)
 
-        setAttributes(document.createElement("div"), { style:`z-index:${this.childCount}`, class:"fade", parent: this.element })
-        setAttributes(document.createElement("div"), { style:`z-index:${Math.ceil(this.childCount/2)}`, class:"inner-fade", parent: this.element })
+        document.createElement("div").preset({ style:`z-index:${this.childCount}`, class:"fade" }, this.element)
+        document.createElement("div").preset({ style:`z-index:${Math.ceil(this.childCount/2)}`, class:"inner-fade" }, this.element)
 
         for (const shelf of shelves) {
             const pushable = (shelf === undefined || shelf instanceof Array) ? new Shelf(width, shelf) : shelf

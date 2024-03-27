@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <style type="text/css">
+        @font-face {
+            font-family: 'Lexend';
+            font-style: normal;
+            font-weight: 400;
+            src: local("Lexend"), url(/subpages/lexend.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        ol {
+            margin: 0;
+            padding: 0
+        }
+                
+        p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+        h1 {
+            padding-top: 20pt;
+            color: #000000;
+            font-size: 20pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            margin-block-start: initial;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+        span {
+            font-size: 15pt;
+            font-family: "Lexend";
+            font-weight: 400
+        }
+        a {
+            -webkit-text-decoration-skip: none;
+            color: #1155cc;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+        }
+
+        .c0 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+        .c1 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+        .c4 {
+            font-size: 25pt;
+            font-family: "Lexend";
+            font-weight: 400
+        }
+        .c5 {
+            /* color: #000000; */
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 18pt;
+            font-family: "Lexend";
+            font-style: normal
+        }
+        .c6 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+        .c7 {
+            padding-top: 10pt;
+            text-indent: 36pt;
+            padding-bottom: 6pt;
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+        .c8 {
+            /* color: #000000; */
+            text-decoration: none;
+            vertical-align: baseline;
+            font-style: normal
+        }
+        .c9 {
+            background-color: #ffffff;
+            max-width: 468pt;
+            padding: 72pt 72pt 72pt 72pt
+        }
+        .c11 {
+            font-weight: 400;
+            font-family: "Lexend"
+        }
+    </style>
+</head>
+
+<body class="c9 doc-content">
+    <h1 class="c7" id="h.te7zaznxoqej">
+        <span class="c4"><b>Cellulart </b></span>
+        <span class="c5">(Jan-Aug 2023)</span>
+    </h1>
+    <p class="c1"><span>
+        Gartic Cellulart is a Chromium/Gecko extension for the browser-based drawing game <a href="https://garticphone.com/">Gartic Phone</a>,
+        providing additional functions that integrate with the base game mechanically and stylistically.</span></p>
+    <p class="c0"></p>
+    <p class="c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; width: 100%;"><img
+                alt="A screenshot of the Refimg functionality being used" src="subpages/cellulart/images/image1.png" onerror="this.src = './images/image1.png'"
+                style="width: 100%; margin-left: 0.00px; margin-top: 0.00px;"
+                title=""></span></p>
+    <p class="c0"></p>
+    <p class="c1"><span>
+        Cellulart was written entirely in vanilla HTML/CSS/JS, 
+        and makes use of lots of different components of the Chromium environment. 
+        For instance,
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers</a>
+        (background scripts) keep the interface responsive while pushing heavy computation to background threads, 
+        and the structure of
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">WebSockets</a> 
+        was studied in order to intercept outgoing traffic.</span></p>
+    <p class="c0"></p>
+    <p class="c1"><span class="c8">
+        I was (and still am) hesitant to migrate to Webpack or similar project / build managers, 
+        so Cellulart uses minified packages provided by 
+        <a href="https://www.jsdelivr.com">jsdelivr</a> 
+        to sidestep external dependencies.</span></p>
+    <p class="c0"></p>
+    <p class="c6"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; width: 100%;"><img
+            alt="A screenshot of the Geom and Debug functionalities being used" src="subpages/cellulart/images/image2.png" onerror="this.src = './images/image2.png'"
+                style="width: 100%; margin-left: 0.00px; margin-top: 0.00px;"
+                title=""></span></p>
+    <p class="c0"></p>
+    <p class="c1"><span>
+        Reformatting the code multiple times was a rewarding experience because I was able to visibly see 
+        the quality of my code improving. The project also acclimated me to the feeling of vulnerability that comes with 
+        <a href="https://github.com/Kuixz/gartic-cellulart">making open-source</a>
+        an unfinished product.</span></p>
+    <p class="c0"></p>
+    <p class="c1"><span>Get the extension for
+        <a href="https://kuixz.itch.io/mikoban">Chrome</a>
+        or <a href="https://kuixz.itch.io/mikoban">Firefox</a></span></p>
+    <p class="c0"></p>
+    <p class="c1"><span>
+        P.S. As thanks for visiting my website, here&rsquo;s a fun fact: 
+        "Satellite" is not just the name of the module that locks and unlocks the "cheat" modules.
+        It is also the passphrase.</span></p>
+    <p class="c0"></p> 
+    <p class="c0"></p>
+</body>
+
+</html>
