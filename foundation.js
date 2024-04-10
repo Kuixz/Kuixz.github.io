@@ -37,10 +37,10 @@ const mod = (n,m) => ((n % m) + m) % m
 // }
 
 const root = document.querySelector(":root");
-var bucketWidth = 165  // 216 144
-var bucketHeight = 137  // 180 120
-root.style.setProperty("--bucket-width", bucketWidth)
-root.style.setProperty("--bucket-height", bucketHeight)
+var bucketWidth = 0.3  // 216 144
+var bucketHeight = 0.32  // 180 120
+// root.style.setProperty("--bucket-width", bucketWidth)
+// root.style.setProperty("--bucket-height", bucketHeight)
 
 // class Project {
 //     link
@@ -58,6 +58,33 @@ const tools = {
     "ppuc" : ["sheets"], // "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
     "cantor" : "https://www.desmos.com/calculator/singorvcyg",
     "DH5a" : ""
+}
+
+const Viewportal = {
+    barrel: undefined,
+    flattened: null,
+
+    init(barrel) {
+        Viewportal.barrel = barrel
+        window.addEventListener("resize", function() {
+            // console.log(window.innerWidth)
+            // console.log(window.innerHeight)
+            // if (window.innerWidth <= 600 && flattened === false) {
+            //     barrel.flatten()
+            // } else if (window.innerWidth > 600 && flattened === true) {
+            //     barrel.unflatten()
+            // }
+            Viewportal.check_flatness(window.innerWidth)
+        })
+        Viewportal.check_flatness(window.innerWidth)
+    },
+    check_flatness(innerWidth) {
+        if (innerWidth <= 600 && this.flattened !== true) {
+            this.barrel.flatten()
+        } else if (innerWidth > 600 && this.flattened !== false) {
+            this.barrel.unflatten()
+        }
+    }
 }
 
 const Selector = {
@@ -138,7 +165,7 @@ const Selector = {
         // this.unravel.style.transform = "translateY(0%)"
         this.unravel.animate(
             [{
-                transform: "translateY(-100%)"
+                transform: "translateY(-110%)"
             }],{
                 duration: 300,
                 easing: "ease-out",
@@ -170,7 +197,7 @@ class HoverIcon {
 
     constructor(parent, id, transformxpercent=0, transformypercent=0, size=1, rotdeg=0) {
         var element = document.createElement("img").preset({ src:`icons/projects/${id}.png`, class:"hoverable icon",  
-            style:`width: ${100*size}%; transform: translate(${transformxpercent}%,${transformypercent}%) rotate(${rotdeg}deg);` })/* scale(${size}) */
+            style:`width: ${100*size}%; transform: translate(${transformxpercent}%,${-transformypercent}%) rotate(${rotdeg}deg);` })/* scale(${size}) */
         // element.setAttribute
         element.onclick = (e) => {
             // window.open(links[id])
@@ -230,15 +257,11 @@ class Bucket {
 
 class Shelf {  // TODO switch to using flex and justify center; support 1-bucket shelves
     element = undefined
-    // index = 0
-    // axis
     length
     children = []
-    // sprites = []
-    // spacer
 
     constructor(width, buckets) {
-        const coreWidth = width - bucketWidth
+        const coreWidth = width * (1 - bucketWidth)
         this.element = document.createElement("div").preset({ class:"hover-shelf" })
         this.length = buckets.length
         this.axis = coreWidth / 2
@@ -286,6 +309,16 @@ class Shelf {  // TODO switch to using flex and justify center; support 1-bucket
         // this.element.style.transform = this.element.style.transform + ` translateX(${-offset}%)`
         this.element.style.transform = this.element.style.transform + `scale(${100 + (2*offset)}%)`
     }
+    flatten(element) {
+        for (const child of this.children) {
+            element.appendChild(child.element)
+        }
+    }
+    unflatten() {
+        for (const child of this.children) {
+            this.element.appendChild(child.element)
+        }
+    }
 }
 
 class Barrel {
@@ -298,13 +331,15 @@ class Barrel {
     diameter
 
     constructor(width, height, shelves) {
+        root.style.setProperty("--bucket-width", width * bucketWidth)
+        root.style.setProperty("--bucket-height", height * bucketHeight)
         // var coreWidth = width - bucketWidth
-        const coreHeight = height - bucketHeight
+        const coreHeight = height * (1 - bucketHeight)
         // const maxBuckets = Math.max(...shelves.filter((x) => x).map((arr) => arr.length))
         // t.textContent = maxBuckets
         this.element = document.createElement("div").preset({ "style":`width:${width}; height:${height}`, "class":"barrel" })
         this.childCount = shelves.length
-        this.axis = height / 2 - bucketHeight / 2
+        this.axis = coreHeight / 2
         // this.children = shelves
         this.diameter = coreHeight / 2
         this.segment = (2 * Math.PI) / (2 * this.childCount)
@@ -335,6 +370,16 @@ class Barrel {
             // t.textContent = "3"
 
             shelf.rotate(localTheta)
+        }
+    }
+    flatten() {
+        for (const shelf of this.children) {
+            shelf.flatten(this.element)
+        }
+    }
+    unflatten() {
+        for (const shelf of this.children) {
+            shelf.unflatten()
         }
     }
 }
@@ -400,3 +445,4 @@ class WheelBarrel extends Barrel {
         }
     }.bind(this)
 }
+

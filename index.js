@@ -10,19 +10,23 @@ var t = document.createElement("p").preset({ parent:frame })
 //     [,,],
 //     [,,[["cellulart",-2,8,0.9,-30]]]]
 const layers = [
-    [[["snowsweeper", 20, 20, 0.52, -3]],[["mikoban", 65, 10, 0.52, 10]],,],
-    [[["cantor",44,8,0.6],["1938",18,8,0.6,-31]],,],
+    [[["snowsweeper", 20, 30, 0.52, -3]],[["mikoban", 65, 40, 0.52, 10]],,],
+    [[["cantor",44,30,0.6],["1938",18,8,0.6,-31]],,],
     [,,[["ppuc",20,17,0.55,-10]],],
     [,,],
-    [,,[["cellulart",20,9,0.5,-30]]]]
+    [,,[["cellulart",20,11,0.5,-30]]]]
 
 // t.textContent = "2"
+// Unstated invariant: Width to height ratio MUST be 9:7 for correct display of icons (EDIT: Fixed (?))
+// var barrel = new WheelBarrel(540, 420, layers)
 var barrel = new WheelBarrel(540, 420, layers)
+// var barrel = new WheelBarrel("45%", "70%", layers)
 // var barrel = new WheelBarrel(750, 600, layers)
 // document.body.appendChild(barrel.element)
 frame.appendChild(barrel.element)
 barrel.rotate(0)
 // t.textContent = "4"
+Viewportal.init(barrel)  // TODO: Goofy ahh workaround
 
 document.addEventListener("keydown", (e) => {
     // t.textContent += ` ${e.code}`;
