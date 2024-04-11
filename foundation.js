@@ -335,8 +335,8 @@ class Barrel {
     diameter
 
     constructor(width, height, shelves) {
-        root.style.setProperty("--bucket-width", width * bucketWidth)
-        root.style.setProperty("--bucket-height", height * bucketHeight)
+        root.style.setProperty("--bucket-width", bucketWidth)
+        // root.style.setProperty("--bucket-height", height * bucketHeight)
         // var coreWidth = width - bucketWidth
         const bucketHeight = bucketWidth / bucketAspectRatio
         const coreHeight = height - bucketHeight

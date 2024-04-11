@@ -132,14 +132,6 @@ div.bucket {
     aspect-ratio: var(--bucket-aspect-ratio);
     /* border: 2px solid white; */
 }
-@media (max-width: 600px) {
-    div.bucket {
-        /* display: inline; */
-        /* display: inline-block; */
-        /* padding: 1%; */
-        /* transform: scale(0.95); */
-    }
-}
 
 img.wall-back {
     position: absolute;
@@ -157,6 +149,7 @@ img.wall-front {
     bottom: 0px;
     width: var(--bucket-width);
     /* height: var(--wall-height); */
+    opacity: 0.5;
 }
 
 .hoverable {
