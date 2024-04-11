@@ -38,9 +38,11 @@ const mod = (n,m) => ((n % m) + m) % m
 
 const root = document.querySelector(":root");
 var bucketWidth = 165  // 216 144
-var bucketHeight = 137  // 180 120
+var bucketAspectRatio = 1.2
+// var bucketHeight = 137  // 180 120
 root.style.setProperty("--bucket-width", bucketWidth)
-root.style.setProperty("--bucket-height", bucketHeight)
+root.style.setProperty("--bucket-aspect-ratio", bucketAspectRatio)
+// root.style.setProperty("--bucket-height", bucketHeight)
 
 // class Project {
 //     link
@@ -54,10 +56,11 @@ const tools = {
     "mikoban" : ["puzzlescript"], // "https://kuixz.itch.io/mikoban"
     "snowsweeper" : "https://github.com/Kuixz/snowsweeper",
     "cellulart" : ["html","css","js"], // "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
-    "1938" : "https://scratch.mit.edu/projects/976714957/",
+    "1938" : ["scratch"], // "https://scratch.mit.edu/projects/976714957/",
     "ppuc" : ["sheets"], // "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
-    "cantor" : "https://www.desmos.com/calculator/singorvcyg",
-    "DH5a" : ""
+    "cantor" : ["desmos"],  // "https://www.desmos.com/calculator/singorvcyg",
+    "dh5a" : "",
+    "aaz": ["sheets"]
 }
 
 const Selector = {
@@ -299,6 +302,7 @@ class Barrel {
 
     constructor(width, height, shelves) {
         // var coreWidth = width - bucketWidth
+        const bucketHeight = bucketWidth / bucketAspectRatio
         const coreHeight = height - bucketHeight
         // const maxBuckets = Math.max(...shelves.filter((x) => x).map((arr) => arr.length))
         // t.textContent = maxBuckets
