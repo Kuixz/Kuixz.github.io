@@ -22,7 +22,7 @@ img {
     user-select: none;
 }
 
-div#frame {
+/* div */ #frame {
     border: 2px solid white;
     height: 600px; /* 775px; /* 450px; */
     width: 1200px; 
@@ -32,6 +32,14 @@ div#frame {
     align-items: center; */
     /* justify-content: left; */
 }
+@media (max-width: 600px) {  /* TODO: Needs to change when bucket resizes */
+    #frame {
+        width: 100%;
+        height: 100%;
+        display:flex;
+        justify-content: center;
+    }
+}
 
 /* div#barrel {
     width: 740px;
@@ -39,6 +47,7 @@ div#frame {
     border: 3px solid red;
     position: relative;
 } */
+
 div.barrel {
     border: 3px solid red;
     position: relative;
@@ -46,6 +55,27 @@ div.barrel {
     margin-left: 10%;
     /* align-items: baseline; */
 
+}
+@media (max-width: 600px) {
+    div.barrel {
+        margin: 0;
+        /* padding: 0%; */
+        border: 3px solid orange;
+        width: 94% !important;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3%;
+        /* transform-origin: top left; */
+        /* transform: scale(calc(var(--screen-width) / 600)) */
+        /* --screen-width: 500; */
+    }
+}
+@media (max-width: 560px) {
+    div.barrel {
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+    }
 }
 
 div.fade {
@@ -59,6 +89,12 @@ div.fade {
     background: linear-gradient(#0a19294D,#0a192900,#0a19294D);
     /* opacity: 0.3; */
 }
+@media (max-width: 600px) {
+    div.fade {
+        display: none;
+    }
+}
+
 div.inner-fade {
     pointer-events: none;
     position: absolute;
@@ -70,6 +106,12 @@ div.inner-fade {
     background: linear-gradient(#0a192900 20%,#0a192999 40%,#0a192999 60%, #0a192900 80%);
     /* opacity: 0.6; */
 }
+@media (max-width: 600px) {
+    div.inner-fade {
+        display: none;
+    }
+}
+
 div.hover-shelf {
     position: absolute;
     pointer-events: none;
@@ -79,6 +121,7 @@ div.hover-shelf {
     width: 100%;
     /* border: 2px solid white; */
 }
+
 div.bucket {
     /* position: absolute; */
     position: relative; 
@@ -89,6 +132,15 @@ div.bucket {
     aspect-ratio: var(--bucket-aspect-ratio);
     /* border: 2px solid white; */
 }
+@media (max-width: 600px) {
+    div.bucket {
+        /* display: inline; */
+        /* display: inline-block; */
+        /* padding: 1%; */
+        /* transform: scale(0.95); */
+    }
+}
+
 img.wall-back {
     position: absolute;
     width: 100%;
@@ -99,9 +151,12 @@ img.wall-back {
     /* pointer-events: */
 }
 img.wall-front {
+    /* --wall-height: calc(0% + var(--bucket-height)); */
+
     position: absolute;
     bottom: 0px;
     width: var(--bucket-width);
+    /* height: var(--wall-height); */
 }
 
 .hoverable {
@@ -119,7 +174,7 @@ img.wall-front {
 
 /* img */ .icon {
     position: absolute;
-    /* bottom: 0px; */
+    bottom: 0px;
     /* width: 100px */
     /* rotate: ; */
 }
@@ -145,12 +200,13 @@ img.wall-front {
 }
 
 
-div.platform {
+/* div */ .platform {
+    width: 20%;
     height: 100%;
     aspect-ratio: 5/12;
     position: absolute;
     top: 0px;
-    z-index: 10;
+    z-index: 11;
 
     pointer-events: none;
     display: flex;
@@ -159,7 +215,7 @@ div.platform {
     justify-content: space-between;
     /* position:relative */
 }
-img.platsprite {
+/* img */ .platsprite {
     /* height: 100%; */
     width: 100%;
     /* position: absolute; */
@@ -169,16 +225,31 @@ img.platsprite {
     z-index: 10;
     /* transform-origin: center; */
 } 
-div#hover-center {
+/* div */ #hover-center {
     /* border: 5px solid yellow; */
     display: flex;
     justify-content: center;
     width: 100%;
 }
+@media (max-width: 600px) {
+    .platform {
+        display: none;
+        /* height: unset;
+        top: 2%;
+        right: 0%;
+        transform-origin: top left;
+        transform: scale(1.5); */
+    }
+    /* .platsprite { */
+        /* border: 3px solid orange; */
+        /* display: none;
+    } */
+}
 
 
 
-div#unravel-holder {
+
+/* div */ #unravel-holder {
     /* border: 5px solid blue; */
     /* background-color: #232e37; */
     position: absolute;
@@ -191,6 +262,13 @@ div#unravel-holder {
     pointer-events: none;
     overflow: hidden;
 }
+@media (max-width: 600px) {
+    #unravel-holder {
+        /* border: 3px solid orange; */
+        width: 100%;
+        right: 0%;
+    }
+}
 
 div#unravel {
     /* border: 5px solid greenyellow; */
@@ -198,7 +276,7 @@ div#unravel {
     padding: 2%;
     /* position: relative; */
     height: 100%;
-    transform: translateY(-100%);
+    transform: translateY(-110%);
     /* top: -100%; */
     pointer-events: initial;
     overflow: scroll;
