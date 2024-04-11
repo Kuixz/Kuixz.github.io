@@ -1,6 +1,7 @@
 :root {
     --bucket-width: 144;
-    --bucket-height: 120;
+    --bucket-aspect-ratio: 1.2;
+    /* --bucket-height: 120; */
     --selected-icon-resize: 1;
 }
 
@@ -82,14 +83,19 @@ div.bucket {
     /* position: absolute; */
     position: relative; 
     pointer-events: initial;
-    height: var(--bucket-height);
+    /* height: var(--bucket-height); */
     width: var(--bucket-width);
+    /* aspect-ratio: 6 / 5; */
+    aspect-ratio: var(--bucket-aspect-ratio);
     /* border: 2px solid white; */
 }
 img.wall-back {
     position: absolute;
-    width: var(--bucket-width);
-    height: var(--bucket-height);
+    width: 100%;
+    /* width: var(--bucket-width); */
+    /* aspect-ratio: 6 / 5; */
+    height: 100%;
+    /* height: var(--bucket-height); */
     /* pointer-events: */
 }
 img.wall-front {
