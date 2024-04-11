@@ -1,5 +1,5 @@
 :root {
-    --bucket-width: 144;
+    --bucket-width: 165;
     --bucket-aspect-ratio: 1.2;
     /* --bucket-height: 120; */
     --selected-icon-resize: 1;
@@ -65,16 +65,16 @@ div.barrel {
 
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
         gap: 3%;
         /* transform-origin: top left; */
         /* transform: scale(calc(var(--screen-width) / 600)) */
         /* --screen-width: 500; */
     }
 }
-@media (max-width: 560px) {
+@media (max-width: 570px) {
     div.barrel {
         grid-template-columns: repeat(2, 1fr);
-        justify-items: center;
     }
 }
 
@@ -122,7 +122,7 @@ div.hover-shelf {
     /* border: 2px solid white; */
 }
 
-div.bucket {
+/* div */ .bucket {
     /* position: absolute; */
     position: relative; 
     pointer-events: initial;
@@ -131,6 +131,11 @@ div.bucket {
     /* aspect-ratio: 6 / 5; */
     aspect-ratio: var(--bucket-aspect-ratio);
     /* border: 2px solid white; */
+}
+@media (max-width: 570px) {
+    .bucket {
+        width: 90%;
+    }
 }
 
 img.wall-back {
@@ -147,7 +152,8 @@ img.wall-front {
 
     position: absolute;
     bottom: 0px;
-    width: var(--bucket-width);
+    /* width: var(--bucket-width); */
+    width: 100%;
     /* height: var(--wall-height); */
     opacity: 0.5;
 }
