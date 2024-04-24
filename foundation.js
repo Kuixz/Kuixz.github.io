@@ -55,7 +55,7 @@ root.style.setProperty("--bucket-aspect-ratio", bucketAspectRatio)
 // }
 const tools = {
     "mikoban" : ["puzzlescript"], // "https://kuixz.itch.io/mikoban"
-    "snowsweeper" : "https://github.com/Kuixz/snowsweeper",
+    "snowsweeper" : ["godot"],  // "https://github.com/Kuixz/snowsweeper",
     "cellulart" : ["html","css","js"], // "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
     "1938" : ["scratch"], // "https://scratch.mit.edu/projects/976714957/",
     "ppuc" : ["sheets"], // "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
