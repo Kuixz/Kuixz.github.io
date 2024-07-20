@@ -155,7 +155,8 @@ img.wall-front {
     /* width: var(--bucket-width); */
     width: 100%;
     /* height: var(--wall-height); */
-    opacity: 0.5;
+    
+    /* opacity: 0.5; */
 }
 
 .hoverable {
