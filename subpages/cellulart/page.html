@@ -21,7 +21,7 @@
         title=""></span></p>
     <p class="space"></p>
     <p class="text"><span>
-        Cellulart was written entirely in vanilla HTML/CSS/JS, 
+        Cellulart was written entirely in vanilla HTML/CSS/JS before migration, 
         and makes use of lots of different components of the Chromium environment. 
         For instance,
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers</a>
@@ -31,10 +31,12 @@
         was studied in order to intercept outgoing traffic.</span></p>
     <p class="space"></p>
     <p class="text"><span class="c8">
-        I was (and still am) hesitant to migrate to Webpack or similar project / build managers, 
-        so Cellulart uses minified packages provided by 
+        I was hesitant to step into Webpack or similar project / build managers, 
+        so Cellulart used to minified packages provided by 
         <a href="https://www.jsdelivr.com">jsdelivr</a> 
-        to sidestep external dependencies.</span></p>
+        to sidestep external dependencies. 
+        But the eventual migration to Typescript (built with Webpack with help from Make) was eye-opening
+        with respect to how many bugs it cleaned out, and how much more robust it made my code. </span></p>
     <p class="space"></p>
     <p class="centered"><span class="inline-images"><img
         alt="A screenshot of the Geom and Debug functionalities being used" 
