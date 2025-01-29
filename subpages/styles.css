@@ -71,7 +71,8 @@ a {
     vertical-align: baseline;
     font-size: 18pt;
     font-family: "Lexend";
-    font-style: normal
+    font-style: normal;
+    white-space: nowrap;
 }
 .c6 {
     padding-top: 0pt;
