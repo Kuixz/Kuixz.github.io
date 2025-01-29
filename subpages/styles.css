@@ -30,7 +30,7 @@ h1 {
     widows: 2;
     text-align: left
 }
-span {
+p > span {
     font-size: 15pt;
     font-family: "Lexend";
     font-weight: 400
@@ -42,7 +42,7 @@ a {
     text-decoration-skip-ink: none;
 }
 
-.c0 {
+.space {
     padding-top: 0pt;
     padding-bottom: 0pt;
     line-height: 1.15;
@@ -51,7 +51,7 @@ a {
     text-align: left;
     height: 11pt
 }
-.c1 {
+.text {
     padding-top: 0pt;
     padding-bottom: 0pt;
     line-height: 1.15;
@@ -59,12 +59,14 @@ a {
     widows: 2;
     text-align: left
 }
-.c4 {
+.title-header {
+    text-indent: 36pt;
+    /* display: inline-block; */
     font-size: 25pt;
     font-family: "Lexend";
     font-weight: 400
 }
-.c5 {
+.title-date {
     /* color: #000000; */
     font-weight: 400;
     text-decoration: none;
@@ -74,7 +76,7 @@ a {
     font-style: normal;
     white-space: nowrap;
 }
-.c6 {
+.centered {
     padding-top: 0pt;
     padding-bottom: 0pt;
     line-height: 1.15;
@@ -82,7 +84,19 @@ a {
     widows: 2;
     text-align: center
 }
-.c7 {
+.inline-images {
+    overflow: hidden; 
+    display: inline-grid; 
+    margin: 0.00px 0.00px; 
+
+    &.len2{ grid-template-columns: 1fr 1fr; }
+}
+.inline-image-content {
+    width: 100%; 
+    margin-left: 0.00px; 
+    margin-top: 0.00px;
+}
+.title-container {
     padding-top: 10pt;
     text-indent: 36pt;
     padding-bottom: 6pt;
@@ -98,12 +112,13 @@ a {
     vertical-align: baseline;
     font-style: normal
 }
-.c9 {
-    background-color: #ffffff;
+.inner-document {
+    /* background-color: #ffffff; */
     max-width: 468pt;
     padding: 72pt 72pt 72pt 72pt
 }
-.c11 {
+.small {
+    font-size: 10pt;
     font-weight: 400;
     font-family: "Lexend"
 }

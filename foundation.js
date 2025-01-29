@@ -7,21 +7,36 @@ Element.prototype.preset = function(attrs, parent = null) {
     return this 
 }
 
-;(() => {
-    Element.prototype.load = async function (kw) {
-        const url = `/subpages/${kw}/page.html`
-        const response = await fetch(url, {
-            cache: "default"
-        })
-        if(!response.ok) { 
-            this.innerHTML = "<p>Under construction... check back soon!</p>"
-            return
-        }
-        const html = await response.text()
-        // console.log(await response.text())
-        this.innerHTML = html
+async function loadInto(target, kw) {
+    const url = `/subpages/${kw}/page.html`
+    const response = await fetch(url, {
+        cache: "default"
+    })
+    if(!response.ok) { 
+        target.innerHTML = "<p>Under construction... check back soon!</p>"
+        return
     }
-})();
+    const html = await response.text()
+    // console.log(await response.text())
+    convertedHTML = html.replaceAll('replace href="', `href="subpages/${kw}/`).replaceAll(`replace src="`, `src="subpages/${kw}/`)
+    target.innerHTML = convertedHTML
+}
+
+// todo: might be faster to adjust html text rather than dom
+// function adjustRelativeHTML(target, kw) {
+//     const adjustmentTargets = target.querySelectorAll("[relative]")
+//     console.log(adjustmentTargets)
+//     adjustmentTargets.forEach((elem) => {
+//         // if (elem.getAttribute("href")) {
+//         //     elem.href = `/subpages/${kw}/${elem.href.slice(2)}`
+//         //     console.log(`Adjusted href to /subpages/${kw}/${elem.href.slice(2)}`)
+//         // }
+//         // if (elem.getAttribute("src")) {
+//         //     elem.src = `/subpages/${kw}/${elem.src.slice(2)}`
+//         //     console.log(`Adjusted src to /subpages/${kw}/${elem.src.slice(2)}`)
+//         // }
+//     })
+// }
 
 const mod = (n,m) => ((n % m) + m) % m
 // class Flag {
@@ -136,7 +151,9 @@ const Selector = {
         this.selected = undefined
     },
     async loadContent(id) {
-        await this.unravel.load(id)
+        await loadInto(this.unravel, id)
+        // adjustRelativeHTML(this.unravel, id)
+
         const h1 = this.unravel.querySelector("h1")
         for (const image of this.unravel.querySelectorAll("img")) {
             this.flash(image, 1.5)
