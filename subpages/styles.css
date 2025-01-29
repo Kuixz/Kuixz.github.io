@@ -76,6 +76,16 @@ a {
     font-style: normal;
     white-space: nowrap;
 }
+.title-category {
+    /* color: #000000; */
+    font-weight: 400;
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 18pt;
+    font-family: "Lexend";
+    font-style: normal;
+    white-space: nowrap;
+}
 .centered {
     padding-top: 0pt;
     padding-bottom: 0pt;

@@ -68,15 +68,8 @@ root.style.setProperty("--bucket-aspect-ratio", bucketAspectRatio)
 //         this.tools = tools
 //     }
 // }
-const tools = {
-    "mikoban" : ["puzzlescript"], // "https://kuixz.itch.io/mikoban"
-    "snowsweeper" : ["godot"],  // "https://github.com/Kuixz/snowsweeper",
-    "cellulart" : ["html","css","js"], // "https://chromewebstore.google.com/u/1/detail/pjeenahidnpjaajbiidagnackjdhnlam",
-    "1938" : ["scratch"], // "https://scratch.mit.edu/projects/976714957/",
-    "ppuc" : ["sheets"], // "https://docs.google.com/spreadsheets/d/1GE0s8OBatUyo3ICzEWXUQysuhQN0hQPImIxt-zzS9ys/edit?usp=sharing",
-    "cantor" : ["desmos"],  // "https://www.desmos.com/calculator/singorvcyg",
-    "dh5a" : "",
-    "aaz": ["sheets"]
+const Data = {
+    tools: {}
 }
 
 const Viewportal = {
@@ -154,13 +147,13 @@ const Selector = {
         await loadInto(this.unravel, id)
         // adjustRelativeHTML(this.unravel, id)
 
-        const h1 = this.unravel.querySelector("h1")
         for (const image of this.unravel.querySelectorAll("img")) {
             this.flash(image, 1.5)
         }
-        for (const tool of tools[id]) {
+        const insertTarget = this.unravel.querySelector("#insert-target")
+        for (const tool of Data.tools[id]) {
             const icon = document.createElement('img').preset({ class:"tool", src:`icons/tools/${tool}.png` })
-            h1.appendChild(icon)
+            insertTarget.appendChild(icon)
         }
     },
     extend() {
